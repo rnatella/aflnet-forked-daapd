@@ -1,0 +1,55 @@
+GET /api/config HTTP/1.1
+Host: 10.0.20.151:3689
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0
+Accept: application/json, text/plain, */*
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://10.0.20.151:3689/
+
+GET /api/outputs HTTP/1.1
+Host: 10.0.20.151:3689
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0
+Accept: application/json, text/plain, */*
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://10.0.20.151:3689/
+
+GET /api/lastfm HTTP/1.1
+Host: 10.0.20.151:3689
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0
+Accept: application/json, text/plain, */*
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://10.0.20.151:3689/
+
+GET /api/outputs HTTP/1.1
+Host: 10.0.20.151:3689
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0
+Accept: application/json, text/plain, */*
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://10.0.20.151:3689/
+
+GET /api/outputs HTTP/1.1
+Host: 10.0.20.151:3689
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0
+Accept: application/json, text/plain, */*
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://10.0.20.151:3689/
+
+GET /api/queue HTTP/1.1
+Host: 10.0.20.151:3689
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0
+Accept: application/json, text/plain, */*
+Accept-Language: it-IT,it;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://10.0.20.151:3689/
+If-None-Match: 18
+
