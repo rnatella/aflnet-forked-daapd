@@ -1,6 +1,6 @@
 This guide provides instructions and support files to run the AFLnet fuzzer on the forked-daapd network server, on Ubuntu 18.04.2 LTS.
 
-The guide assumes that AFLnet has already been compiled according to its tutorial, and that environmental variables (e.g., `$AFLNET`) are set accordingly.
+The guide assumes that AFLnet has already been compiled according to its [tutorial](https://github.com/aflnet/aflnet#tutorial---fuzzing-live555-media-streaming-server), and that environmental variables (e.g., `$AFLNET`) are set accordingly.
 
 Moreover, the guide assumes that the `$WORKDIR` variable has been set to the folder with a copy of this repository, as follows:
 
