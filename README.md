@@ -181,7 +181,7 @@ To test the new version of the server:
 To run the fuzzer:
 
 ```
-afl-fuzz -d -i $WORKDIR/in-daapd/ -o $WORKDIR/out-daap/ -N tcp://127.0.0.1/3689 -P HTTP -D 300000 -m 1000  -q 3 -s 3 -E -K -R ./forked-daapd -d 5 -c ./forked-daapd.conf 
+afl-fuzz -d -i $WORKDIR/in-daapd/ -o $WORKDIR/out-daap/ -N tcp://127.0.0.1/3689 -P HTTP -D 300000 -m 1000 -t 3000+ -q 3 -s 3 -E -K -R ./forked-daapd -d 5 -c ./forked-daapd.conf -f
 ```
 
 Note that the parameter `-D` is needed to let the server to initialize before fuzzing. The initialization takes few seconds.
