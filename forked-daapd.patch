@@ -1,30 +1,8 @@
-diff --git a/forked-daapd.conf.in b/forked-daapd.conf.in
-index d65f53b8..fc3de408 100644
---- a/forked-daapd.conf.in
-+++ b/forked-daapd.conf.in
-@@ -34,6 +34,7 @@ general {
- 	# interface. Options are "any", "localhost" or the prefix to one or
- 	# more ipv4/6 networks. The default is { "localhost", "192.168", "fd" }
- #	trusted_networks = { "localhost", "192.168", "fd" }
-+	trusted_networks = { any }
- 
- 	# Enable/disable IPv6
- 	ipv6 = yes
-@@ -68,7 +69,8 @@ library {
- #	password = ""
- 
- 	# Directories to index
--	directories = { "/srv/music" }
-+	#directories = { "/srv/music" }
-+	directories = { "/home/rnatella/MP3/" }
- 
- 	# Follow symlinks. Default: true.
- #	follow_symlinks = true
 diff --git a/src/httpd.c b/src/httpd.c
-index ffb03d87..edaa980c 100644
+index 29a347d5..94fb19ba 100644
 --- a/src/httpd.c
 +++ b/src/httpd.c
-@@ -1430,6 +1430,9 @@ httpd_send_reply(struct evhttp_request *req, int code, const char *reason, struc
+@@ -1431,6 +1431,9 @@ httpd_send_reply(struct evhttp_request *req, int code, const char *reason, struc
    if (allow_origin)
      evhttp_add_header(output_headers, "Access-Control-Allow-Origin", allow_origin);
  
@@ -61,10 +39,10 @@ index 58f12f56..d83e45b4 100644
    lib = cfg_getsec(cfg, "library");
  
 diff --git a/src/misc.c b/src/misc.c
-index 737cda81..e7166d18 100644
+index 5a849136..0bb26dcb 100644
 --- a/src/misc.c
 +++ b/src/misc.c
-@@ -1361,7 +1361,7 @@ mutex_init(pthread_mutex_t *mutex)
+@@ -1384,7 +1384,7 @@ mutex_init(pthread_mutex_t *mutex)
    int err;
  
    CHECK_ERR(L_MISC, pthread_mutexattr_init(&mattr));
@@ -73,3 +51,15 @@ index 737cda81..e7166d18 100644
    err = pthread_mutex_init(mutex, &mattr);
    CHECK_ERR(L_MISC, pthread_mutexattr_destroy(&mattr));
  
+diff --git a/src/transcode.c b/src/transcode.c
+index 77bc9b46..d1985c00 100644
+--- a/src/transcode.c
++++ b/src/transcode.c
+@@ -772,6 +772,7 @@ open_decoder(unsigned int *stream_index, struct decode_ctx *ctx, enum AVMediaTyp
+       avcodec_free_context(&dec_ctx);
+       return NULL;
+     }
++  dec_ctx->thread_count=1;
+ 
+   if (type == AVMEDIA_TYPE_AUDIO)
+     {
