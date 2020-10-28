@@ -46,12 +46,39 @@ sudo make install
 ```
 
 
-To configure the server, edit the configuration file to configure the folder with an MP3 library, such as:
+We use the MP3 folder in this repo as local folder with music. In our seed file, we queried a local database by copying the MP3 folder in `/tmp/MP3`.
+
+The server creates two SQLite databases (for caching requests, and for the song database) in `/var/cache/forked-daapd`. You can either give your user write permissions to that folder, or you can change the folder to the work directory.
+
+To manage these aspects, we configure the server by:
+- Setting the music folder
+- Setting the DB folder
+- Setting the user for running the server process
+- Disable caching
+- Disable MP3 library rescanning on start-up (the library will not change during fuzzing)
+- Disable logging to the filesystem (otherwise, it would fill up the disk during fuzzing):
 
 ```
-perl -p -i -e 's|/srv/music|'$WORKDIR'/MP3|' forked-daapd.conf
-```
+cp -R $WORKDIR/MP3 /tmp/
 
+mkdir $WORDIR/db
+
+cd $WORKDIR/forked-daapd
+
+perl -p -i -e 's|/srv/music|/tmp/MP3|' forked-daapd.conf
+
+perl -p -i -e 's|^#\scache_path\s=\s".*"|\tcache_path = "'$WORKDIR'/db/cache.db"|' forked-daapd.conf
+
+perl -p -i -e 's|^#\sdb_path\s=\s".*"|\tdb_path = "'$WORKDIR'/db/songs3.db"|' forked-daapd.conf
+
+perl -p -i -e 's|uid\s=\s"daapd"|uid = "'`whoami`'"|' forked-daapd.conf
+
+perl -p -i -e 's|^#\scache_daap_threshold\s=\s\d+|\tcache_daap_threshold = 0|' forked-daapd.conf
+
+perl -p -i -e 's|^#\sfilescan_disable\s=\sfalse|\tfilescan_disable = false|' forked-daapd.conf
+
+perl -p -i -e 's|(\tlogfile\s=\s".*")|#$1|' forked-daapd.conf
+```
 
 Finally, to launch the server:
 
@@ -60,8 +87,6 @@ Finally, to launch the server:
 ```
 
 You can test the server with a browser at http://localhost:3689 .
-
-
 
 Before fuzzing, we recompile the server (and some of its dependencies) to avoid multi-threading, in order to improve stability. We replace the pthreads library with the GNU Pth library (as suggested in the AFL user guide), which provides user-space threading and wrappers for the pthreads library.
 
@@ -181,7 +206,7 @@ To test the new version of the server:
 To run the fuzzer:
 
 ```
-afl-fuzz -d -i $WORKDIR/in-daapd/ -o $WORKDIR/out-daap/ -N tcp://127.0.0.1/3689 -P HTTP -D 300000 -m 1000 -t 3000+ -q 3 -s 3 -E -K -R ./forked-daapd -d 5 -c ./forked-daapd.conf -f
+afl-fuzz -d -i $WORKDIR/in-daapd/ -o $WORKDIR/out-daap/ -N tcp://127.0.0.1/3689 -P HTTP -D 200000 -m 1000 -t 3000+ -q 3 -s 3 -E -K -R ./src/forked-daapd -d 0 -c ./forked-daapd.conf -f
 ```
 
 Note that the parameter `-D` is needed to let the server to initialize before fuzzing. The initialization takes few seconds.
